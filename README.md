@@ -24,7 +24,13 @@ Replace the `.video-placeholder` element in `index.html` with your captioned vid
 
 ## Deploy
 
-The site is static and works at a domain root or in a repository subpath. Two options:
+The site is static and works at a domain root or in a repository subpath.
+
+### Vercel
+
+Import this repository with root directory `./` and Application Preset **Other**. This is correct: the site uses plain HTML/CSS/JavaScript, not Next.js. The checked-in `vercel.json` explicitly sets the build command, skips unnecessary dependency installation, and publishes only `dist/`. Leave dashboard build overrides disabled and deploy the latest `main` commit. No environment variables are required. If an older deployment failed, deploy the new commit instead of retrying its old source.
+
+### Other hosting options
 
 1. **GitHub Pages:** in this repository’s Settings → Pages, choose “Deploy from a branch”, branch `main`, folder `/ (root)`, and save. GitHub will display the live URL once deployment finishes. No workflow or build service is required.
 2. **Other static hosting:** run `npm run build` and publish the contents of `dist/`. Build command: `npm run build`; output directory: `dist`.
