@@ -1,6 +1,6 @@
 # DineAgain
 
-A small, responsive, four-section restaurant marketing website. Plain HTML, CSS and JavaScript; no third-party requests, runtime dependencies, tracking scripts or invented testimonials. Palette: cream `#F4F0E5`, forest `#263D2C`, terracotta `#C66C49`, sage `#E1E7D7`.
+A small, responsive, four-section restaurant marketing website. Plain HTML, CSS and JavaScript with a Vercel function for consultation requests. No runtime dependencies, tracking scripts or invented testimonials. Palette: cream `#F4F0E5`, forest `#263D2C`, terracotta `#C66C49`, sage `#E1E7D7`.
 
 ## Run and verify
 
@@ -16,7 +16,13 @@ Open `http://127.0.0.1:4173`. `npm run dev` serves the source instead.
 
 ## Activate consultations
 
-Edit `site-config.js`: set `bookingUrl` to your real HTTPS scheduling URL, or set `contactEmail` to your real email address. Booking takes precedence if both are set. All three consultation links update together. Until configured, they lead to the clearly labeled “Consultation booking opens soon” message. There is no simulated calendar, form submission, or confirmation.
+All three consultation links open the same three-step dialog, based on LeadRevive: restaurant questions → preferred date/time → contact details. Choices cover the next fourteen weekdays, with half-hour slots from 09:00 to 18:00 in the visitor's timezone. These are requested times, not live availability or guaranteed reservations. The team confirms each meeting manually.
+
+In the **DineAgain** Vercel project, add `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` under Settings → Environment Variables, using the same bot/chat values as LeadRevive. Set them for Production (and Preview if wanted), then redeploy. Credentials must never appear in browser code or Git. The `.env.example` lists the variable names without values. The local preview reads the same variables from its process environment; Node's `--env-file` option can load a local ignored `.env` file.
+
+The server validates all fields, date/time and timezone, rejects honeypot submissions, and sends a DineAgain-branded message to Telegram. Success appears only after Telegram reports acceptance. Missing configuration disables submission with an honest notice; errors preserve the entered details. Requests are not stored in a database, and no automatic email/calendar invitation is sent. Tests mock Telegram and send no real messages.
+
+Optional: `site-config.js` can override the built-in form with an HTTPS `bookingUrl` or `contactEmail`; leave both empty to use the form.
 
 ## Add the video
 
@@ -28,15 +34,14 @@ The site is static and works at a domain root or in a repository subpath.
 
 ### Vercel
 
-Import this repository with root directory `./` and Application Preset **Other**. This is correct: the site uses plain HTML/CSS/JavaScript, not Next.js. The checked-in `vercel.json` explicitly sets the build command, skips unnecessary dependency installation, and publishes only `dist/`. Leave dashboard build overrides disabled and deploy the latest `main` commit. No environment variables are required. If an older deployment failed, deploy the new commit instead of retrying its old source.
+Import this repository with root directory `./` and Application Preset **Other**. The checked-in `vercel.json` sets the build command and static output directory; Vercel also deploys `api/consultation.js` as a server function. Leave dashboard build overrides disabled and deploy the latest `main` commit. Set the two Telegram environment variables above to activate submissions. If an older deployment failed, deploy the new commit instead of retrying its old source.
 
 ### Other hosting options
 
-1. **GitHub Pages:** in this repository’s Settings → Pages, choose “Deploy from a branch”, branch `main`, folder `/ (root)`, and save. GitHub will display the live URL once deployment finishes. No workflow or build service is required.
-2. **Other static hosting:** run `npm run build` and publish the contents of `dist/`. Build command: `npm run build`; output directory: `dist`.
+The marketing page can still be hosted statically, but the built-in form requires `/api/consultation`. For static-only hosts such as GitHub Pages, configure a real external booking URL or contact email in `site-config.js` instead. For the full integrated flow, use Vercel.
 
 Publishing the repository does not itself enable hosting. Configure the real consultation destination before promoting the site. If connecting a custom domain later, follow the selected host’s domain setup and HTTPS instructions; no custom domain or DNS change is included here.
 
 ## Design and accessibility
 
-Exactly four content sections: hero, video placeholder, offer, final consultation. System sans-serif and Georgia keep the page light and avoid font downloads. Mobile layout stacks naturally; keyboard focus and skip navigation are visible; reduced-motion preferences disable animation. The build validates the section count, checks for displayed pricing and checks JavaScript syntax before copying the five public assets.
+Exactly four content sections: hero, video placeholder, offer, final consultation. The booking dialog opens on demand, traps keyboard focus natively, closes with Escape, returns focus to its opener and preserves details when navigating between steps. System fonts avoid downloads. Reduced-motion preferences disable animation. The build validates the section count, checks for displayed service pricing and checks JavaScript syntax before copying public assets. Server credentials and the Telegram handler are never included in the public build.

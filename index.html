@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="./styles.css">
     <script src="./site-config.js" defer></script>
     <script src="./script.js" defer></script>
+    <script src="./booking.js" type="module"></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -66,11 +67,50 @@
           <h2 id="consultation-title">Make “we should go back”<br><em>happen more often.</em></h2>
           <p>Let’s talk about your restaurant, your guests,<br class="desktop-break"> and what bringing them back could look like.</p>
           <a class="button button-cream" href="#booking-status" data-consultation>Book a consultation</a>
-          <p class="booking-status" id="booking-status" role="status">Consultation booking opens soon. Please check back.</p>
-          <noscript><p class="booking-status">If booking is available, enable JavaScript to load the contact link.</p></noscript>
+          <p class="booking-status" id="booking-status">Choose a preferred time. We’ll confirm the meeting with you personally.</p>
+          <noscript><p class="booking-status">Please enable JavaScript to open the consultation request form.</p></noscript>
         </div>
       </section>
     </main>
+
+    <dialog id="booking-dialog" aria-labelledby="booking-title">
+      <button class="dialog-close" type="button" aria-label="Close consultation form">×</button>
+      <form id="booking-form" aria-label="Consultation request">
+        <input class="form-trap" name="companyWebsite" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="form-head"><div><p class="eyebrow">Free consultation</p><h2 id="booking-title" tabindex="-1">Tell us about your restaurant</h2></div><span id="step-label">Step 1 of 3</span></div>
+        <div class="form-progress" aria-hidden="true"><span id="step-progress"></span></div>
+        <p id="booking-service" class="service-note" role="status">Checking consultation requests…</p>
+        <fieldset data-step="1">
+          <legend class="sr-only">About your restaurant</legend>
+          <label>How many guests are on your email list?<select name="emailList" required><option value="">Select a range</option><option>No list yet</option><option>Fewer than 500</option><option>500–999</option><option>1,000–2,499</option><option>2,500+</option></select></label>
+          <label>Approximately how many guests visit each month?<select name="monthlyGuests" required><option value="">Select a range</option><option>Fewer than 500</option><option>500–999</option><option>1,000–2,499</option><option>2,500–4,999</option><option>5,000+</option></select></label>
+          <label>Which day would you most like to fill?<select name="quietDay" required><option value="">Select a day</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option><option>It varies</option></select></label>
+          <button class="button form-next" type="button" data-next="2">Continue to booking</button>
+        </fieldset>
+        <fieldset data-step="2" hidden disabled>
+          <legend class="sr-only">Preferred consultation time</legend>
+          <div class="booking-meta"><span>30-minute consultation</span><span id="booking-timezone"></span></div>
+          <p class="picker-label">Select a preferred date</p>
+          <div id="date-options" class="date-grid" role="group" aria-label="Preferred date"></div>
+          <div id="time-picker" hidden><p class="picker-label" id="time-heading">Select a preferred time</p><div id="time-options" class="time-grid" role="group" aria-label="Preferred time"></div></div>
+          <p class="selected-slot" id="time-selection" aria-live="polite" hidden></p>
+          <div class="form-actions"><button class="back-button" type="button" data-back="1">Back</button><button class="button" type="button" data-next="3" id="time-next" disabled>Continue</button></div>
+          <p class="privacy-copy">Times are in your local timezone. These are preferred times, not live calendar availability. We’ll confirm your meeting separately.</p>
+        </fieldset>
+        <fieldset data-step="3" hidden disabled>
+          <legend class="sr-only">Your contact details</legend>
+          <div class="two-fields"><label>First name<input name="firstName" autocomplete="given-name" required maxlength="100" placeholder="Your first name"></label><label>Restaurant name<input name="business" autocomplete="organization" required maxlength="150" placeholder="Your restaurant"></label></div>
+          <label>Website<input name="website" inputmode="url" autocapitalize="none" spellcheck="false" required maxlength="250" placeholder="yourrestaurant.com"></label>
+          <label>Work email<input name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@yourrestaurant.com"></label>
+          <label>Telephone number<input name="phone" type="tel" autocomplete="tel" required maxlength="40" placeholder="Include your country code"></label>
+          <div class="selected-slot slot-review"><span id="slot-review"></span><button class="back-button" type="button" data-back="2">Change</button></div>
+          <p class="form-error" id="booking-error" role="alert" hidden></p>
+          <div class="form-actions"><button class="back-button" type="button" data-back="2">Back</button><button class="button" type="submit" id="booking-submit" disabled>Request my consultation</button></div>
+          <p class="privacy-copy">We’ll use these details only to discuss your restaurant and arrange this consultation. Your request is sent privately to our team via Telegram.</p>
+        </fieldset>
+      </form>
+      <div id="booking-success" class="booking-success" hidden><span class="success-mark" aria-hidden="true">✓</span><p class="eyebrow">Request received</p><h2 tabindex="-1">Your consultation request is in.</h2><p>Your preferred time has been sent to us. We’ll contact you with the final confirmation and meeting details.</p><button class="button" type="button" id="booking-done">Back to DineAgain</button></div>
+    </dialog>
 
     <footer class="site-footer wrap"><a class="wordmark" href="#" aria-label="DineAgain home">dineagain<span class="brand-dot">.</span></a><p>Good food. Familiar faces.</p><span>© <span id="year">2026</span> DineAgain</span></footer>
   </body>

@@ -1,10 +1,12 @@
 import { mkdir, copyFile, readFile } from 'node:fs/promises';
 import { Script } from 'node:vm';
-const files = ['index.html', 'styles.css', 'script.js', 'site-config.js', 'favicon.svg'];
+const files = ['index.html', 'styles.css', 'script.js', 'site-config.js', 'favicon.svg', 'booking.js', 'booking-utils.js'];
 const html = await readFile('index.html', 'utf8');
 if ((html.match(/<section\b/g) || []).length !== 4) throw new Error('Expected exactly four sections.');
 if (/\$\s*\d|\b350\b/.test(html)) throw new Error('Public page must not include pricing.');
-for (const file of files.filter(file => file.endsWith('.js'))) new Script(await readFile(file, 'utf8'), { filename: file });
+for (const file of ['script.js', 'site-config.js']) new Script(await readFile(file, 'utf8'), { filename: file });
+const { execFileSync } = await import('node:child_process');
+for (const file of ['booking.js', 'booking-utils.js', 'api/consultation.js']) execFileSync(process.execPath, ['--check', file]);
 await mkdir('dist', { recursive: true });
 await Promise.all(files.map(file => copyFile(file, `dist/${file}`)));
 console.log(`Built ${files.length} static assets in dist/. No runtime dependencies.`);

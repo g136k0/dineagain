@@ -1,5 +1,6 @@
-// Add your real booking URL OR contact email here when ready.
-// A booking URL takes precedence. Keep both empty to show the honest placeholder.
+// Leave both empty to use the built-in three-step consultation request form.
+// Optional overrides: a real HTTPS booking URL takes precedence over a contact email.
+// Telegram credentials belong ONLY in Vercel environment variables, never here.
 window.DINEAGAIN_CONFIG = {
   bookingUrl: "",
   contactEmail: ""
