@@ -1,0 +1,14 @@
+{
+  "name": "dineagain",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A compact restaurant email marketing landing page.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/serve.mjs",
+    "preview": "node scripts/serve.mjs dist",
+    "test": "node --test scripts/config.test.mjs"
+  }
+}
