@@ -42,6 +42,22 @@ The marketing page can still be hosted statically, but the built-in form require
 
 Publishing the repository does not itself enable hosting. Configure the real consultation destination before promoting the site. If connecting a custom domain later, follow the selected host’s domain setup and HTTPS instructions; no custom domain or DNS change is included here.
 
+## Policy pages and launch details
+
+The footer links to `privacy-policy.html`, `terms-of-service.html`, `cookie-policy.html` and `data-processing.html`. The consultation form links to privacy information before submission. Pages use the existing branding, semantic headings, keyboard navigation and mobile layouts; they work without JavaScript. The build copies all four pages and checks local links and anchors.
+
+These notices are **drafts pending real operator information**. Before relying on them for live collection or contracting:
+
+- Replace bracketed legal entity, registered address, KvK/VAT (where applicable), business email and privacy contact fields. Make rights-request channels operational.
+- Verify actual hosting and Telegram legal entities, roles, regions, contracts, safeguards for EEA transfers and access controls. Review whether Telegram is appropriate for enquiry handling; bot messages are not asserted to be end-to-end encrypted.
+- Set and implement enquiry/Telegram, security log, consent, subscriber, suppression and backup retention/deletion periods. The application does not automatically delete Telegram messages.
+- Identify email and QR providers/subprocessors and execute an Article 28 GDPR DPA before processing restaurant guest lists. The processing notice is not an executed DPA.
+- Agree fees, taxes, renewal/cancellation, service levels, liability, IP and dispute terms in a customer contract; no paid contract is created by browsing or requesting a consultation.
+- Give each restaurant signup its own controller notice, specific opt-in and consent evidence, with tested unsubscribe/suppression. Assess email open/click tracking separately.
+- Audit the live host for cookies and optional scripts. Current source sets no cookies or persistent browser storage and loads no optional trackers, so no consent banner is shipped. If optional tracking or video embeds are added, implement prior blocking, clear accept/reject choices and accessible withdrawal before enabling them.
+
+Legal drafting references: [EDPB controller/processor guide](https://www.edpb.europa.eu/sme/learn-the-basics/data-controller-or-data-processor_en), [European Commission transfer guidance](https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/rules-international-data-transfers_en), [Dutch AP consent guidance](https://autoriteitpersoonsgegevens.nl/themas/basis-avg/avg-algemeen/grondslag-toestemming) and [cookie banner guidance](https://autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/heldere-cookiebanners). Verify final text against the real operation and obtain Netherlands legal review before treating the drafts as complete notices or contractual terms.
+
 ## Design and accessibility
 
-Exactly four content sections: hero, video placeholder, offer, final consultation. The booking dialog opens on demand, traps keyboard focus natively, closes with Escape, returns focus to its opener and preserves details when navigating between steps. System fonts avoid downloads. Reduced-motion preferences disable animation. The build validates the section count, checks for displayed service pricing and checks JavaScript syntax before copying public assets. Server credentials and the Telegram handler are never included in the public build.
+Exactly four homepage content sections: hero, video placeholder, offer, final consultation. The booking dialog opens on demand, traps keyboard focus natively, closes with Escape, returns focus to its opener and preserves details when navigating between steps. System fonts avoid downloads. Reduced-motion preferences disable animation. The build validates the homepage section count, checks for displayed service pricing and checks JavaScript syntax before copying public assets. Server credentials and the Telegram handler are never included in the public build.
